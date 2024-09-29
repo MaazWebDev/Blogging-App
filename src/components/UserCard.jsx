@@ -25,7 +25,7 @@ function UserCard({
         </figure>
       </div>
       <div className="card-body">
-        <h2 className="card-title">{longTitle(blogTitle)}</h2>
+        <h2 className="card-title">{blogTitle}</h2>
         <p>{blogMessage}</p>
         {/* <div className="card-actions justify-start mt-3">
           <button
