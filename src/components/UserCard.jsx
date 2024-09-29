@@ -13,9 +13,6 @@ function UserCard({
   // const deletAlert = (id, index) => {
   //   deleteBlog(id, index);
   // };
-  const longTitle = (title) => {
-    return title.length > 12 ? title.substring(0, 12) + '...' : title;
-  };
   return (
     <div className="card card-side bg-base-100 shadow-xl p-5 flex-col mx-auto mt-5 w-[90%] sm:w-[600px] md:w-[750px] items-start justify-center">
       <div className="sm:px-8">
