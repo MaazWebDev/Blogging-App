@@ -42,7 +42,7 @@ function Login() {
       const user = userCredential.user;
       navigate("/");
       Swal.fire({
-        position: "top-end",
+        position: "top-center",
         icon: "success",
         title: "Welcome",
         text: user.displayName,
