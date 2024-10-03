@@ -39,9 +39,9 @@ function SingleBlog() {
                   Title <br />
                   {singleBlog.blogTitle}
                 </h2>
-                <p>
-                  Description <br /> {singleBlog.blogMessage}
-                </p>
+                <h2>
+                  Description :<br /> <p>{singleBlog.blogMessage}</p>
+                </h2>
                 <div className="card-actions justify-end"></div>
               </div>
             </div>

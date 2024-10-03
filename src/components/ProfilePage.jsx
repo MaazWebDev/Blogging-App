@@ -14,7 +14,7 @@ function ProfilePage() {
   return (
     <>
       {profile ? (
-        <div className="flex gap-8 shadow-2xl w-fit mt-10 p-14 mx-auto items-center">
+        <div className="flex justify-center gap-8 shadow-2xl w-fit mt-10 p-14 mx-auto items-center flex-col sm:flex-row">
           <div className="w-full h-full sm:w-[330px] sm:h-[250px]">
             <img
               src={profile.photoURL}

@@ -16,3 +16,11 @@ body {
   text-overflow: ellipsis; /* Adds "..." */
   max-width: 100%; /* Ensures the title respects its container's width */
 }
+.errClass {
+  color: red;
+  height: auto;
+  transition: opacity 0.5s ease, height 0.5s ease; /* Removed quotes */
+  overflow: hidden;
+  margin-top: 10px;
+  font-size: 13px;
+}

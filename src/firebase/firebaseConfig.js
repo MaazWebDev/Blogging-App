@@ -10,6 +10,9 @@ import {
   doc,
   deleteDoc,
   updateDoc,
+  query,
+  orderBy,
+  Timestamp,
 } from "firebase/firestore";
 
 import {
@@ -34,7 +37,6 @@ const firebaseConfig = {
   messagingSenderId: "797496656534",
   appId: "1:797496656534:web:85ba17effa9e58321d38b7"
 };
-
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -63,8 +65,11 @@ export {
   doc,
   updateDoc,
   deleteDoc,
+  query,
+  orderBy,
   signInWithPopup,
   GithubAuthProvider,
   GoogleAuthProvider,
   FacebookAuthProvider,
+  Timestamp,
 };

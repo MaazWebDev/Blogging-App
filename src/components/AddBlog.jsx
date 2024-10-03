@@ -7,12 +7,13 @@ import {
   deleteDoc,
 } from "./../firebase/firebaseConfig";
 import { getUserBlogs, addingBlogToFirestore } from "../firebase/firebaseFunc";
-import UserCard from "./UserCard";
 import BlogForm from "./BlogForm";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Triangle } from "react-loader-spinner";
+import UserCard from "./UserCard";
+import "./EditBlog"
 
 function AddBlog() {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ function AddBlog() {
   } = useForm();
   const [user, setUser] = useState(null); // Changed initial state to null
   const [userBlogs, setUserBlogs] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -37,19 +38,20 @@ function AddBlog() {
     });
   }, []);
 
+  const getData = async () => {
+    setLoading(true);
+    try {
+      const { singleUserData } = await getUserBlogs(user.uid, "blogs");
+      setUserBlogs(singleUserData);
+    } catch (error) {
+      console.error("Error fetching blogs:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (user) {
-      const getData = async () => {
-        setLoading(true);
-        try {
-          const { singleUserData } = await getUserBlogs(user.uid, "blogs");
-          setUserBlogs(singleUserData);
-        } catch (error) {
-          console.error("Error fetching blogs:", error);
-        } finally {
-          setLoading(false);
-        }
-      };
       getData();
     }
   }, [user]); // Add user as a dependency
@@ -65,24 +67,15 @@ function AddBlog() {
     try {
       const { blogUrl, docId } = await addingBlogToFirestore(
         // calling addBlog Function to save blog in firestore and recieving blogImage url and id
-        "blogImage",
-        blogImg,
-        "blogs",
-        blogTitle, 
-        blogMessage,
-        user 
+        "blogImage", // folder Ref
+        blogImg, // image file
+        "blogs", // collection name
+        blogTitle, // title
+        blogMessage, // description
+        user // current login user
       );
 
-      const newBlog = {
-        blogUrl,
-        blogTitle,
-        blogMessage,
-        uid: user.uid,
-        userName: user.displayName,
-        userPic: user.photoURL,
-        id: docId,
-      };
-      setUserBlogs((prevBlogs) => [newBlog, ...prevBlogs]);
+      getData();
       Swal.fire({
         position: "top",
         icon: "success",
@@ -105,7 +98,7 @@ function AddBlog() {
   };
 
   const editBlog = (id) => {
-    navigate(`/editblog/${id}`);
+    navigate(`/Editblog/${id}`);
   };
 
   const deleteBlog = async (id, index) => {
@@ -142,22 +135,23 @@ function AddBlog() {
             isRequired={true}
             isSubmitting={isSubmitting}
           />
-    
+          {/* Blog rendering */}
           <h2 className="text-center font-semibold text-[30px] my-10">
             User Blogs
           </h2>
           {userBlogs.length > 0 ? (
             userBlogs.map((item, index) => (
               <div key={item.id}>
-                <UserCard
-                  id={item.id}
-                  blogUrl={item.blogUrl}
-                  blogTitle={item.blogTitle}
-                  index={index}
-                  blogMessage={item.blogMessage}
-                  editBlog={editBlog}
-                  deleteBlog={deleteBlog}
-                  display={"inline"}
+                <UserCard 
+                id={item.id}
+                blogUrl={item.blogUrl}
+                blogTitle={item.blogTitle}
+                index={index}
+                blogMessage={item.blogMessage}
+                EditBlog={ editBlog}
+                deleteBlog={deleteBlog}
+                display={"block"}
+                date={item.date}
                 />
               </div>
             ))

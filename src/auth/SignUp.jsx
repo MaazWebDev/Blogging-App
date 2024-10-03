@@ -43,15 +43,19 @@ function SignUp() {
     try {
       await createUser(email, password, profile, first_name, last_name);
       navigate("/");
+      Swal.fire({
+        position: "top-center",
+        icon: "success",
+        title: "Welcome",
+      });
     } catch (error) {
-      const errorMessage = error.message;
       Swal.fire({
         icon: "error",
         title: "Auth Error",
-        text: errorMessage,
+        text: error.message,
       });
     }
-  }
+  };
   return (
     <>
       {loading ? (
@@ -69,7 +73,7 @@ function SignUp() {
           className="h-full flex items-center"
           style={{
             background:
-              "bg-base-400",
+              "#e5e7eb",
           }}
         >
           <div className="shadow-lg w-[90%] sm:w-[600px] p-[50px] rounded-md m-auto bg-[#f9f9f9] my-12">
@@ -98,13 +102,9 @@ function SignUp() {
                   accept=".jpeg, .png, .jpg"
                 />
                 <p
+                  className="errClass"
                   style={{
-                    color: "red",
                     opacity: errors.profile ? 1 : 0,
-                    height: "auto",
-                    transition: "opacity 0.5s ease, height 0.5s ease",
-                    marginTop: "10px",
-                    fontSize: 13,
                   }}
                 >
                   {errors.profile?.message}
@@ -126,13 +126,9 @@ function SignUp() {
                   Email Address
                 </label>
                 <p
+                  className="errClass"
                   style={{
-                    color: "red",
                     opacity: errors.email ? 1 : 0,
-                    height: "auto",
-                    transition: "opacity 0.5s ease, height 0.5s ease",
-                    marginTop: "10px",
-                    fontSize: 13,
                   }}
                 >
                   {errors.email?.message}
@@ -154,13 +150,9 @@ function SignUp() {
                   })}
                 />
                 <p
+                  className="errClass"
                   style={{
-                    color: "red",
                     opacity: errors.password ? 1 : 0,
-                    height: "auto",
-                    transition: "opacity 0.5s ease, height 0.5s ease",
-                    marginTop: "10px",
-                    fontSize: 13,
                   }}
                 >
                   {errors.password?.message}
@@ -187,13 +179,9 @@ function SignUp() {
                   })}
                 />
                 <p
+                  className="errClass"
                   style={{
-                    color: "red",
                     opacity: errors.repeat_password ? 1 : 0,
-                    height: "auto",
-                    transition: "opacity 0.5s ease, height 0.5s ease",
-                    marginTop: "10px",
-                    fontSize: 13,
                   }}
                 >
                   {errors.repeat_password?.message}
@@ -218,13 +206,9 @@ function SignUp() {
                     })}
                   />
                   <p
+                    className="errClass"
                     style={{
-                      color: "red",
                       opacity: errors.first_name ? 1 : 0,
-                      height: "auto",
-                      transition: "opacity 0.5s ease, height 0.5s ease",
-                      marginTop: "10px",
-                      fontSize: 13,
                     }}
                   >
                     {errors.first_name?.message}
@@ -248,13 +232,9 @@ function SignUp() {
                     })}
                   />
                   <p
+                    className="errClass"
                     style={{
-                      color: "red",
                       opacity: errors.last_name ? 1 : 0,
-                      height: "auto",
-                      transition: "opacity 0.5s ease, height 0.5s ease",
-                      marginTop: "10px",
-                      fontSize: 13,
                     }}
                   >
                     {errors.last_name?.message}

@@ -3,6 +3,7 @@ import { Outlet, useParams } from "react-router-dom";
 import { getUserBlogs } from "../firebase/firebaseFunc";
 import UserCard from "./UserCard";
 import { Triangle } from "react-loader-spinner";
+import "./SingleBlog";
 
 function SelectedUserBlog() {
   const { uid } = useParams();
@@ -15,6 +16,7 @@ function SelectedUserBlog() {
         const { singleUserData } = await getUserBlogs(uid, "blogs");
         setUserBlog([...singleUserData]);
         setUserDetail(singleUserData[0]);
+        console.log(singleUserData);
       } catch (error) {
         console.log(error);
       }
@@ -41,6 +43,8 @@ function SelectedUserBlog() {
                 blogTitle={item.blogTitle}
                 index={index}
                 blogMessage={item.blogMessage}
+                display="hidden"
+                date={item.date}
               />
             </div>
           ))}

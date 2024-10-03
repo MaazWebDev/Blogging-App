@@ -7,13 +7,13 @@ import Login from "./auth/Login";
 import SignUp from "./auth/SignUp";
 import UserLogin from "./components/UserLogin";
 import AddBlog from "./components/AddBlog";
-import SingleBlog from "./components/SingleBlog";
 import AllBlogs from "./components/AlllBlogs";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SelectedUserBlog from "./components/SelectedUserBlog";
 import EditBlog from "./components/EditBlog";
 import ProfilePage from "./components/ProfilePage";
 import NotFound from "./components/NotFound";
+import SingleBlog from "./components/SingleBlog";
 
 const router = createBrowserRouter([
   {

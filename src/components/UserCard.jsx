@@ -1,4 +1,5 @@
 import React from "react";
+import EditBlog from "./EditBlog";
 
 function UserCard({
   id,
@@ -8,11 +9,11 @@ function UserCard({
   index,
   blogMessage,
   display,
-  editBlog,
+  EditBlog,
 }) {
-  // const deletAlert = (id, index) => {
-  //   deleteBlog(id, index);
-  // };
+  const deletAlert = (id, index) => {
+    deleteBlog(id, index);
+  };
   return (
     <div className="card card-side bg-base-100 shadow-xl p-5 flex-col mx-auto mt-5 w-[90%] sm:w-[600px] md:w-[750px] items-start justify-center">
       <div className="sm:px-8">
@@ -27,9 +28,9 @@ function UserCard({
       <div className="card-body">
         <h2 className="card-title">{blogTitle}</h2>
         <p>{blogMessage}</p>
-        {/* <div className="card-actions justify-start mt-3">
+        <div className="card-actions justify-start mt-3">
           <button
-            onClick={() => editBlog(id)}
+            onClick={() => EditBlog(id)}
             className={`btn btn-primary ${display}`}
           >
             Edit
@@ -40,7 +41,7 @@ function UserCard({
           >
             Delete
           </button>
-        </div> */}
+        </div>
       </div>
     </div>
   );

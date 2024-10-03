@@ -1,11 +1,13 @@
 import { onAuthStateChanged, auth, signOut } from "../firebase/firebaseConfig";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 function UserLogin() {
   const location = useLocation();
   const navigate = useNavigate();
   const [currUser, setCurrUser] = useState();
+  const drawerCheckboxRef = useRef(null); // Add ref for the drawer checkbox
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -28,19 +30,28 @@ function UserLogin() {
     if (location.pathname !== "/addblog") {
       navigate("/addblog");
     }
+    drawerCheckboxRef.current.checked = false; // Close drawer on link click
   };
+
   const profilePage = () => {
     if (location.pathname !== "/profilepage") {
       navigate("/profilepage");
     }
+    drawerCheckboxRef.current.checked = false; // Close drawer on link click
   };
 
   return (
     <>
       {currUser ? (
         <div className="drawer">
-          <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
+          <input
+            id="my-drawer-3"
+            type="checkbox"
+            className="drawer-toggle"
+            ref={drawerCheckboxRef} // Attach the ref to the checkbox
+          />
           <div className="drawer-content flex flex-col">
+            {/* Navbar */}
             <div className="navbar bg-[#494949] text-white w-full">
               <div className="flex-none lg:hidden">
                 <label
@@ -63,12 +74,18 @@ function UserLogin() {
                   </svg>
                 </label>
               </div>
-              <div className="mx-2 flex-1 px-2 cursor-pointer"><Link to="/">React Blog App</Link></div>
+              <div className="mx-2 flex-1 px-2 cursor-pointer"><Link to={"/"}>BLOG APP</Link></div>
               <div className="hidden flex-none lg:block">
                 <ul className="menu menu-horizontal items-center">
                   {/* Navbar menu content here */}
                   <li>
-                    <Link style={{ color: "#fff" }} to={"/"}>
+                    <Link
+                      style={{ color: "#fff" }}
+                      to={"/"}
+                      onClick={() =>
+                        (drawerCheckboxRef.current.checked = false)
+                      } // Close drawer on link click
+                    >
                       Home
                     </Link>
                   </li>
@@ -98,9 +115,12 @@ function UserLogin() {
               aria-label="close sidebar"
               className="drawer-overlay"
             ></label>
-            <ul className="menu bg-base-200 min-h-full w-80 p-4 cursor-pointer">
+            <ul className="menu bg-base-200 min-h-full w-80 p-4">
               <li>
-                <Link style={{ color: "#fff" }} to={"/"}>
+                <Link
+                  to={"/"}
+                  onClick={() => (drawerCheckboxRef.current.checked = false)} // Close drawer on link click
+                >
                   Home
                 </Link>
               </li>
@@ -126,7 +146,12 @@ function UserLogin() {
       ) : (
         <div>
           <div className="drawer">
-            <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
+            <input
+              id="my-drawer-3"
+              type="checkbox"
+              className="drawer-toggle"
+              ref={drawerCheckboxRef} // Attach the ref to the checkbox
+            />
             <div className="drawer-content flex flex-col">
               {/* Navbar */}
               <div className="navbar bg-[#494949] text-white w-full">
@@ -151,19 +176,40 @@ function UserLogin() {
                     </svg>
                   </label>
                 </div>
-                <div className="mx-2 flex-1 px-2 cursor-pointer"><Link to="/">React Blog App</Link></div>
+                <div className="mx-2 flex-1 px-2 cursor-pointer text-3xl"><Link to={"/"}>BLOG APP</Link></div>
                 <div className="hidden flex-none lg:block">
                   <ul className="menu menu-horizontal items-center">
+                    {/* Navbar menu content here */}
                     <li>
-                      <Link style={{ color: "#fff" }} to={"/"}>
+                      <Link
+                        style={{ color: "#fff" }}
+                        to={"/"}
+                        onClick={() =>
+                          (drawerCheckboxRef.current.checked = false)
+                        } // Close drawer on link click
+                      >
                         Home
                       </Link>
                     </li>
                     <li>
-                      <Link to={"/login"}>Sign in</Link>
+                      <Link
+                        to={"/login"}
+                        onClick={() =>
+                          (drawerCheckboxRef.current.checked = false)
+                        } // Close drawer on link click
+                      >
+                        Sign in
+                      </Link>
                     </li>
                     <li>
-                      <Link to={"/signup"}>Sign Up</Link>
+                      <Link
+                        to={"/signup"}
+                        onClick={() =>
+                          (drawerCheckboxRef.current.checked = false)
+                        } // Close drawer on link click
+                      >
+                        Sign Up
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -177,15 +223,28 @@ function UserLogin() {
               ></label>
               <ul className="menu bg-base-200 min-h-full w-80 p-4">
                 <li>
-                  <Link style={{ color: "#fff" }} to={"/"}>
+                  <Link
+                    to={"/"}
+                    onClick={() => (drawerCheckboxRef.current.checked = false)} // Close drawer on link click
+                  >
                     Home
                   </Link>
                 </li>
                 <li>
-                  <Link to={"/login"}>Sign in</Link>
+                  <Link
+                    to={"/login"}
+                    onClick={() => (drawerCheckboxRef.current.checked = false)} // Close drawer on link click
+                  >
+                    Sign in
+                  </Link>
                 </li>
                 <li>
-                  <Link to={"/signup"}>Sign Up</Link>
+                  <Link
+                    to={"/signup"}
+                    onClick={() => (drawerCheckboxRef.current.checked = false)} // Close drawer on link click
+                  >
+                    Sign Up
+                  </Link>
                 </li>
               </ul>
             </div>

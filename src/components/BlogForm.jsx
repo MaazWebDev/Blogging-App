@@ -28,7 +28,14 @@ function BlogForm({
                 required: isRequired ? "Image is Required" : false,
               })}
             />
-            <p>{errors.blogImg?.message}</p>
+            <p
+              className="errClass"
+              style={{
+                opacity: errors.blogImg ? 1 : 0,
+              }}
+            >
+              {errors.blogImg?.message}
+            </p>
           </div>
           <div className="mb-5">
             <label
@@ -49,12 +56,17 @@ function BlogForm({
                   message: "Blog title must be at least 10 characters long.",
                 },
                 maxLength: {
-                  value: 20,
-                  message: "Blog title must be at most 20 characters long.",
+                  value: 40,
+                  message: "Blog title must be at most 40 characters long.",
                 },
               })}
             />
-            <p>{errors.blogTitle?.message}</p>
+            <p
+              className="errClass"
+              style={{ opacity: errors.blogTitle ? 1 : 0 }}
+            >
+              {errors.blogTitle?.message}
+            </p>
           </div>
           <div className="mb-5">
             <label
@@ -82,11 +94,18 @@ function BlogForm({
                 },
               })}
             />
-            <p>{errors.blogMessage?.message}</p>
+            <p
+              className="errClass"
+              style={{
+                opacity: errors.blogMessage ? 1 : 0,
+              }}
+            >
+              {errors.blogMessage?.message}
+            </p>
           </div>
           <button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting} // Disable when submitting
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           >
             {isSubmitting ? "Adding..." : "Add Blog"} {/* Change button text */}

@@ -13,6 +13,9 @@ import {
   doc,
   getDoc,
   updateDoc,
+  query,
+  orderBy,
+  Timestamp,
 } from "./firebaseConfig";
 
 const createUser = async (
@@ -52,6 +55,7 @@ const addingBlogToFirestore = async (
   blogMessage,
   user
 ) => {
+  const date = new Date();
   const storageRef = ref(storage, `${folderRef}/${blogImg[0].name}`);
   await uploadBytes(storageRef, blogImg[0]);
   const blogUrl = await getDownloadURL(storageRef);
@@ -63,23 +67,38 @@ const addingBlogToFirestore = async (
     uid: user.uid,
     userName: user.displayName,
     userPic: user.photoURL,
+    date: Timestamp.fromDate(date),
   });
   return { blogUrl, docId: docRef.id };
 };
 
 const getUserBlogs = async (uid, collectionName) => {
-  const querySnapshot = await getDocs(collection(db, collectionName));
-  const singleUserData = [];
-  const allUserData = [];
-  querySnapshot.forEach((doc) => {
-    if (uid && uid === doc.data().uid) {
-      singleUserData.push({ ...doc.data(), id: doc.id });
-    } else {
-      allUserData.push({ ...doc.data(), id: doc.id });
-    }
-  });
-  // console.log(blogsData); // Logging the final array after loop completes
-  return { allUserData, singleUserData }; // Return data outside the loop
+  try {
+    // Create a query to get all blogs ordered by date in descending order
+    const allBlogsQuery = query(
+      collection(db, collectionName),
+      orderBy("date", "desc")
+    );
+    const querySnapshot = await getDocs(allBlogsQuery);
+
+    const singleUserData = [];
+    const allUserData = [];
+
+    querySnapshot.forEach((doc) => {
+      const data = { ...doc.data(), id: doc.id };
+
+      if (uid && uid === data.uid) {
+        singleUserData.push(data);
+      } else {
+        allUserData.push(data);
+      }
+    });
+
+    return { allUserData, singleUserData };
+  } catch (error) {
+    console.error("Error fetching user blogs:", error);
+    throw error; // Rethrow or handle the error as needed
+  }
 };
 
 const getSingleDoc = async (id, collection) => {

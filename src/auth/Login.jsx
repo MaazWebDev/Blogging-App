@@ -107,7 +107,7 @@ function Login() {
           className="h-full sm:h-[100%] flex items-center"
           style={{
             background:
-              "bg-base-400",
+              "#e5e7eb",
           }}
         >
           <div className="shadow-lg w-[90%] sm:w-[500px] bg-[#f9f9f9]  md:w-[500px] py-[70px] px-[50px] rounded-md m-auto my-10">
@@ -132,14 +132,9 @@ function Login() {
                   })}
                 />
                 <p
+                  className="errClass"
                   style={{
-                    color: "red",
                     opacity: errors.email ? 1 : 0,
-                    height: "auto",
-                    transition: "opacity 0.5s ease, height 0.5s ease",
-                    overflow: "hidden",
-                    marginTop: "10px",
-                    fontSize: 13,
                   }}
                 >
                   {errors.email?.message}
@@ -162,14 +157,9 @@ function Login() {
                   })}
                 />
                 <p
+                  className="errClass"
                   style={{
-                    color: "red",
                     opacity: errors.password ? 1 : 0,
-                    height: "auto",
-                    transition: "opacity 0.5s ease, height 0.5s ease",
-                    overflow: "hidden",
-                    marginTop: "10px",
-                    fontSize: 13,
                   }}
                 >
                   {errors.password?.message}
@@ -182,7 +172,7 @@ function Login() {
                 Sign in
               </button>
             </form>
-            <div className="text-center mt-5">or sign in using</div>
+            <div className="text-center mt-5">Or sign in using</div>
             <div className="flex justify-center items-center gap-4 mt-4 text-[25px]">
               <FcGoogle
                 onClick={() => socialMediaAuth(GoogleAuthProvider)}
